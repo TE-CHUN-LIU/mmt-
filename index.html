@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天賦原理 公式計算器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8d48b;
+    --gold-dark: #8a6d20;
+    --bg-deep: #0a0a14;
+    --bg-card: #12121f;
+    --text: #e8e0d0;
+    --text-dim: #8a8078;
+    --red: #c0392b;
+    --teal: #2a9d8f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif TC', serif;
+    background: var(--bg-deep);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1.5px 1.5px at 50% 10%, rgba(201,168,76,0.5), transparent),
+      radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.2), transparent),
+      radial-gradient(1.5px 1.5px at 15% 85%, rgba(201,168,76,0.4), transparent),
+      radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.25), transparent);
+    background-size: 300px 300px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+  }
+
+  .header-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  h1 {
+    font-family: 'Cinzel', 'Noto Serif TC', serif;
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 4px;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+    margin: 20px 0;
+  }
+
+  .input-section {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .input-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .input-label {
+    font-size: 14px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .date-inputs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .date-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .date-field label {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .date-field input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+
+  .date-field input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(201,168,76,0.15);
+  }
+
+  .date-field input::placeholder {
+    color: rgba(255,255,255,0.15);
+    font-size: 14px;
+  }
+
+  .btn-calc {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border: none;
+    border-radius: 12px;
+    color: var(--bg-deep);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 3px;
+    transition: all 0.3s;
+    margin-top: 4px;
+  }
+
+  .btn-calc:active { transform: scale(0.97); }
+
+  .results {
+    display: none;
+    gap: 16px;
+    flex-direction: column;
+  }
+
+  .results.show {
+    display: flex;
+    animation: fadeUp 0.5s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+  }
+
+  .result-card.yearly::after { background: var(--red); }
+  .result-card.liunian::after { background: var(--teal); }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .yearly .card-title { color: #e07060; }
+  .liunian .card-title { color: #5ec4b6; }
+
+  .card-number { display: flex; gap: 10px; }
+
+  .number-badge {
+    width: 48px;
+    height: 64px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: 900;
+  }
+
+  .yearly .number-badge {
+    background: linear-gradient(135deg, rgba(192,57,43,0.15), rgba(192,57,43,0.05));
+    border: 1.5px solid rgba(192,57,43,0.35);
+    color: #e8897d;
+    box-shadow: 0 4px 15px rgba(192,57,43,0.1);
+  }
+
+  .calc-steps {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .calc-steps span { color: var(--text); }
+
+  /* Number Grid */
+  .ref-section { margin-top: 10px; }
+
+  .ref-title {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .number-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .num-cell {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dim);
+    transition: all 0.3s;
+  }
+
+  .num-cell.active {
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.05));
+    border-color: var(--gold);
+    color: var(--gold-light);
+    box-shadow: 0 0 12px rgba(201,168,76,0.15);
+    transform: scale(1.05);
+  }
+
+  /* 流年 Table */
+  .liunian-table-wrap {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(42,157,143,0.15);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(42,157,143,0.3) transparent;
+  }
+
+  .liunian-table-wrap::-webkit-scrollbar { width: 6px; }
+  .liunian-table-wrap::-webkit-scrollbar-track { background: transparent; }
+  .liunian-table-wrap::-webkit-scrollbar-thumb { background: rgba(42,157,143,0.3); border-radius: 3px; }
+
+  .liunian-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .liunian-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .liunian-table th {
+    background: rgba(42,157,143,0.15);
+    color: #5ec4b6;
+    padding: 10px 8px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(42,157,143,0.2);
+  }
+
+  .liunian-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    color: var(--text-dim);
+    transition: all 0.2s;
+  }
+
+  .liunian-table tr:hover td {
+    background: rgba(42,157,143,0.05);
+  }
+
+  .liunian-table tr.current-year td {
+    background: rgba(42,157,143,0.12);
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .liunian-table tr.current-year td:last-child {
+    color: #5ec4b6;
+  }
+
+  .liunian-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 13px;
+  }
+
+  .liunian-table tr.current-year .liunian-badge {
+    background: rgba(42,157,143,0.2);
+    border: 1px solid rgba(42,157,143,0.4);
+    color: #7edfd2;
+  }
+
+  .liunian-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(42,157,143,0.2);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--teal);
+    color: #5ec4b6;
+    background: rgba(42,157,143,0.1);
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 1px;
+  }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="header-icon">🔮</div>
+    <h1>天賦原理</h1>
+    <div class="subtitle">公 式 計 算 器</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="input-section">
+    <div class="input-label">✦ 輸入出生年月日</div>
+    <div class="date-inputs">
+      <div class="date-field">
+        <label>西元年</label>
+        <input type="number" id="year" placeholder="1991" min="1900" max="2026">
+      </div>
+      <div class="date-field">
+        <label>月</label>
+        <input type="number" id="month" placeholder="01" min="1" max="12">
+      </div>
+      <div class="date-field">
+        <label>日</label>
+        <input type="number" id="day" placeholder="28" min="1" max="31">
+      </div>
+    </div>
+    <button class="btn-calc" onclick="calculate()">開 始 計 算</button>
+  </div>
+
+  <div class="results" id="results">
+    <div class="result-card yearly" id="yearlyCard">
+      <div class="card-header">
+        <div class="card-title">📅 年度策略（<span id="thisYearLabel"></span>）</div>
+      </div>
+      <div class="card-number" id="yearlyNumbers"></div>
+      <div class="calc-steps" id="yearlySteps"></div>
+    </div>
+
+    <div class="result-card liunian" id="liunianCard">
+      <div class="card-header">
+        <div class="card-title">🌊 MMT 流年表</div>
+      </div>
+      <div class="liunian-filter">
+        <button class="filter-btn active" data-mode="nearby" onclick="filterLiunian('nearby', this)">前後10年</button>
+        <button class="filter-btn" data-mode="all" onclick="filterLiunian('all', this)">完整100年</button>
+      </div>
+      <div class="liunian-table-wrap" id="liunianWrap">
+        <table class="liunian-table">
+          <thead>
+            <tr>
+              <th>西元年</th>
+              <th>年齡</th>
+              <th>流年</th>
+            </tr>
+          </thead>
+          <tbody id="liunianBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="ref-section">
+      <div class="ref-title">— 數字對照 0-22 —</div>
+      <div class="number-grid" id="numberGrid"></div>
+    </div>
+  </div>
+
+  <div class="footer">天賦原理 公式計算器</div>
+</div>
+
+<script>
+  const grid = document.getElementById('numberGrid');
+  for (let i = 0; i <= 22; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'num-cell';
+    cell.dataset.num = i;
+    cell.textContent = i;
+    grid.appendChild(cell);
+  }
+
+  function digitSum(n) {
+    let s = 0;
+    for (const ch of String(Math.abs(n))) s += parseInt(ch);
+    return s;
+  }
+
+  function reduceTo22(n) {
+    while (n > 22) n = digitSum(n);
+    return n;
+  }
+
+  let liunianData = [];
+  let currentFilterMode = 'nearby';
+
+  function calculate() {
+    const year = parseInt(document.getElementById('year').value);
+    const month = parseInt(document.getElementById('month').value);
+    const day = parseInt(document.getElementById('day').value);
+
+    if (!year || !month || !day) {
+      alert('請輸入完整的出生年月日');
+      return;
+    }
+
+    const currentYear = new Date().getFullYear();
+    document.getElementById('thisYearLabel').textContent = currentYear;
+
+    // ===== 年度策略 =====
+    const yearlyRaw = currentYear + month + day;
+    let yearlyStepText = `${currentYear} + ${month} + ${day} = <span>${yearlyRaw}</span>`;
+    let yearlyResult = yearlyRaw;
+    while (yearlyResult > 22) {
+      const prev = yearlyResult;
+      yearlyResult = digitSum(yearlyResult);
+      yearlyStepText += `<br>${Array.from(String(prev)).join(' + ')} = <span>${yearlyResult}</span>`;
+    }
+
+    const yearlyContainer = document.getElementById('yearlyNumbers');
+    yearlyContainer.innerHTML = '';
+    const yearlyBadge = document.createElement('div');
+    yearlyBadge.className = 'number-badge';
+    yearlyBadge.textContent = yearlyResult === 22 ? '0' : yearlyResult;
+    yearlyContainer.appendChild(yearlyBadge);
+    document.getElementById('yearlySteps').innerHTML = yearlyStepText;
+
+    // ===== MMT 流年表 =====
+    liunianData = [];
+    for (let age = 0; age <= 100; age++) {
+      const y = year + age;
+      const rawSum = y + month + day;
+      // Same logic as Excel: digit sum of rawSum, then reduce to <=22
+      let ln = digitSum(rawSum);
+      while (ln > 22) ln = digitSum(ln);
+      liunianData.push({ year: y, age, liunian: ln });
+    }
+
+    currentFilterMode = 'nearby';
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.mode === 'nearby');
+    });
+    renderLiunian();
+
+    // Highlight grid
+    const activeNums = new Set();
+    activeNums.add(yearlyResult === 22 ? 0 : yearlyResult);
+    document.querySelectorAll('.num-cell').forEach(cell => {
+      cell.classList.toggle('active', activeNums.has(parseInt(cell.dataset.num)));
+    });
+
+    document.getElementById('results').classList.add('show');
+    setTimeout(() => {
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  function renderLiunian() {
+    const currentYear = new Date().getFullYear();
+    const tbody = document.getElementById('liunianBody');
+    tbody.innerHTML = '';
+
+    let dataToShow = liunianData;
+    if (currentFilterMode === 'nearby') {
+      dataToShow = liunianData.filter(d => d.year >= currentYear - 10 && d.year <= currentYear + 10);
+    }
+
+    dataToShow.forEach(d => {
+      const tr = document.createElement('tr');
+      if (d.year === currentYear) tr.className = 'current-year';
+      const display = d.liunian === 22 ? 0 : d.liunian;
+      tr.innerHTML = `<td>${d.year}</td><td>${d.age}</td><td><span class="liunian-badge">${display}</span></td>`;
+      tbody.appendChild(tr);
+    });
+
+    setTimeout(() => {
+      const currentRow = tbody.querySelector('.current-year');
+      if (currentRow) {
+        const wrap = document.getElementById('liunianWrap');
+        wrap.scrollTop = currentRow.offsetTop - wrap.offsetHeight / 2 + currentRow.offsetHeight / 2;
+      }
+    }, 50);
+  }
+
+  function filterLiunian(mode, btn) {
+    currentFilterMode = mode;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.mode === mode);
+    });
+    renderLiunian();
+  }
+
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+  });
+</script>
+
+</body>
+</html>
