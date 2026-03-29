@@ -431,7 +431,7 @@
 <div class="container">
   <div class="header">
     <div class="header-icon">🔮</div>
-    <h1>天賦原理</h1>
+    <h1>年度策略</h1>
     <div class="subtitle">公 式 計 算 器</div>
   </div>
 
@@ -487,26 +487,14 @@
       </div>
     </div>
 
-    <div class="ref-section">
-      <div class="ref-title">— 數字對照 0-22 —</div>
-      <div class="number-grid" id="numberGrid"></div>
-    </div>
+
   </div>
 
   <div class="footer">天賦原理 公式計算器</div>
 </div>
 
 <script>
-  const grid = document.getElementById('numberGrid');
-  for (let i = 0; i <= 22; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'num-cell';
-    cell.dataset.num = i;
-    cell.textContent = i;
-    grid.appendChild(cell);
-  }
-
-  function digitSum(n) {
+function digitSum(n) {
     let s = 0;
     for (const ch of String(Math.abs(n))) s += parseInt(ch);
     return s;
@@ -568,14 +556,7 @@
     });
     renderLiunian();
 
-    // Highlight grid
-    const activeNums = new Set();
-    activeNums.add(yearlyResult === 22 ? 0 : yearlyResult);
-    document.querySelectorAll('.num-cell').forEach(cell => {
-      cell.classList.toggle('active', activeNums.has(parseInt(cell.dataset.num)));
-    });
-
-    document.getElementById('results').classList.add('show');
+document.getElementById('results').classList.add('show');
     setTimeout(() => {
       document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
