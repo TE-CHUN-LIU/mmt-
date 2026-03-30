@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMT 商業發展策略框架 — 逐字稿</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wind: #2B4B8C;
+    --wind-light: #EBF0FA;
+    --wind-mid: #4A6AAF;
+    --water: #1A7A9A;
+    --water-light: #E2F4F8;
+    --water-mid: #3A9ABB;
+    --fire: #C0392B;
+    --fire-light: #FAEAEA;
+    --fire-mid: #E05848;
+    --earth: #5A4A3A;
+    --earth-light: #F2EDE8;
+    --earth-mid: #8A7A6A;
+    --navy: #1A2340;
+    --gold: #C9A84C;
+    --ink: #1A1A2E;
+    --muted: #6B7280;
+    --rule: #E5E7EB;
+    --page: #FAFAF8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: #F4F2EE;
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 40px auto;
+    background: var(--page);
+    border-radius: 4px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.12);
+    overflow: hidden;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--navy);
+    padding: 56px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+  }
+  .cover-tag {
+    display: inline-block;
+    border: 1px solid rgba(201,168,76,0.5);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 5px 14px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .cover-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .cover-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 2px;
+    margin-bottom: 36px;
+  }
+  .cover-meta {
+    display: flex; gap: 32px; flex-wrap: wrap;
+  }
+  .cover-meta-item { text-align: left; }
+  .cover-meta-label { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .cover-meta-val { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+  /* ── SECTION WRAPPER ── */
+  .section { padding: 48px 60px; border-bottom: 1px solid var(--rule); }
+  .section:last-child { border-bottom: none; }
+
+  .section-number {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--navy);
+    display: inline-block;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+
+  /* ── SCRIPT BLOCK ── */
+  .script-block {
+    background: #F8F7F4;
+    border-left: 3px solid var(--gold);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .script-block p {
+    font-size: 15px;
+    line-height: 2;
+    color: #2A2A3A;
+  }
+  .script-block p + p { margin-top: 12px; }
+
+  /* ── FIVE CORES GRID ── */
+  .cores-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .core-card {
+    background: #FFF;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .core-icon { font-size: 22px; margin-bottom: 6px; }
+  .core-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .core-en { font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-bottom: 8px; }
+  .core-desc { font-size: 11.5px; color: #4A4A5A; line-height: 1.7; }
+
+  /* ── ENERGY ROWS ── */
+  .energy-section { margin-bottom: 32px; }
+  .energy-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 18px;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 0;
+  }
+  .energy-header.wind { background: var(--wind); }
+  .energy-header.water { background: var(--water); }
+  .energy-header.fire { background: var(--fire); }
+  .energy-header.earth { background: var(--earth); }
+
+  .energy-icon { font-size: 22px; }
+  .energy-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFF;
+  }
+  .energy-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-left: auto; letter-spacing: 1px; }
+
+  .energy-body {
+    background: #FFF;
+    border: 1px solid var(--rule);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 20px 22px;
+  }
+
+  .energy-intro {
+    font-size: 14px;
+    color: #3A3A4A;
+    line-height: 1.9;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .num-card {
+    border-radius: 5px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .num-card.wind { background: var(--wind-light); border-top: 3px solid var(--wind); }
+  .num-card.water { background: var(--water-light); border-top: 3px solid var(--water); }
+  .num-card.fire { background: var(--fire-light); border-top: 3px solid var(--fire); }
+  .num-card.earth { background: var(--earth-light); border-top: 3px solid var(--earth); }
+
+  .num-badge {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .num-badge.wind { color: var(--wind); }
+  .num-badge.water { color: var(--water); }
+  .num-badge.fire { color: var(--fire); }
+  .num-badge.earth { color: var(--earth); }
+
+  .num-func { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .num-core { font-size: 10px; color: var(--muted); }
+
+  .energy-script {
+    font-size: 14px;
+    color: #3A3A4A;
+    line-height: 2;
+    padding: 14px 18px;
+    background: #FAFAF6;
+    border-radius: 4px;
+    border-left: 2px solid rgba(0,0,0,0.08);
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--navy);
+    color: #FFF;
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin-top: 16px;
+  }
+  .callout-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .callout p { font-size: 15px; line-height: 2; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--navy) 0%, #2A3560 100%);
+    padding: 48px 60px;
+    text-align: center;
+  }
+  .cta-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFF;
+    margin-bottom: 12px;
+  }
+  .cta-sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 28px; }
+  .cta-url {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 36px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  @media (max-width: 700px) {
+    .section, .cover { padding: 32px 24px; }
+    .cores-grid { grid-template-columns: repeat(2, 1fr); }
+    .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+    .cover-title { font-size: 22px; }
+    .cta-section { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-tag">圖片文案 · 逐字稿</div>
+    <div class="cover-title">MMT 商業發展策略<br>五大核心與四大能量整合框架</div>
+    <div class="cover-sub">Mercury Mental Thinking · 完整說明逐字稿</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">系統基礎</div>
+        <div class="cover-meta-val">畢達哥拉斯數字學 × 西洋占星 × 希臘神話 × 榮格心理學</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">官方網站</div>
+        <div class="cover-meta-val">one-mercury.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: OVERALL INTRO -->
+  <div class="section">
+    <div class="section-number">Section 01</div>
+    <div class="section-title">整體框架介紹</div>
+    <div class="section-desc">適用場景：圖片主標題說明、開場白文案</div>
+
+    <div class="script-block">
+      <p>每一家企業的成長，都需要同時照顧五個核心命脈——產品、銷售、人才、研發、財務。</p>
+      <p>但你有沒有想過：為什麼有些人天生就是做產品的料，有些人一開口就成交，有些人默默搭建起整個組織卻不居功？</p>
+      <p>MMT 商業發展策略框架，結合畢達哥拉斯數字學、西洋占星與榮格心理學，將每個人的天賦號碼對應到企業最需要的職能位置——讓你知道：誰該去開疆拓土、誰該鞏固根基、誰該串起人心、誰該引爆行動。</p>
+      <p>這不是星座占卜，這是一套<strong>識人 × 用人 × 留人</strong>的精準工具。</p>
+    </div>
+
+    <!-- FIVE CORES -->
+    <div class="section-number" style="margin-top:8px;">五大核心</div>
+    <div style="margin-bottom:14px; font-size:13.5px; color:var(--muted);">企業永續經營的五個命脈，缺一不可</div>
+    <div class="cores-grid">
+      <div class="core-card">
+        <div class="core-icon">📦</div>
+        <div class="core-name">產品</div>
+        <div class="core-en">Product</div>
+        <div class="core-desc">產品是企業的價值載體，連結企業能力與市場需求，是一切商業活動的起點。</div>
+      </div>
+      <div class="core-card">
+        <div class="core-icon">📊</div>
+        <div class="core-name">銷售</div>
+        <div class="core-en">Sales</div>
+        <div class="core-desc">透過標準化銷售漏斗——從開發潛在客戶、資格審查、提案到成交，系統性實現營收轉化。</div>
+      </div>
+      <div class="core-card">
+        <div class="core-icon">👥</div>
+        <div class="core-name">人才</div>
+        <div class="core-en">Talent</div>
+        <div class="core-desc">組織效能與競爭壁壘的核心，關鍵在於將對的人放在對的位置，發揮最大效能。</div>
+      </div>
+      <div class="core-card">
+        <div class="core-icon">💡</div>
+        <div class="core-name">研發</div>
+        <div class="core-en">R&amp;D</div>
+        <div class="core-desc">透過敏捷研發與技術資產的積累，打造企業不可替代的核心競爭力。</div>
+      </div>
+      <div class="core-card">
+        <div class="core-icon">📋</div>
+        <div class="core-name">財務</div>
+        <div class="core-en">Finance</div>
+        <div class="core-desc">深度解讀財務數據，掌握現金流與獲利能力，規劃可持續的商業模式。</div>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <p>這五大核心不是獨立運作的——每一個人的天賦能量，都在其中某個位置最能發光。MMT 系統幫助你看見：你的團隊裡，哪個核心位置人才充沛，哪個位置正在失血。</p>
+    </div>
+  </div>
+
+  <!-- SECTION 2: FOUR ENERGIES OVERVIEW -->
+  <div class="section">
+    <div class="section-number">Section 02</div>
+    <div class="section-title">四大能量說明</div>
+    <div class="section-desc">適用場景：能量分區介紹、識人識己文案</div>
+
+    <div class="script-block">
+      <p>MMT 系統將人的天賦能量分為四大類型：<strong>風、水、火、土</strong>。</p>
+      <p>這四種能量源自榮格心理學的行為模式理論，結合西洋占星元素，形成一套精準的識人座標。</p>
+      <p>沒有哪種能量比較好——每一種都是組織不可或缺的力量。真正的問題是：你有沒有把對的能量，放在對的位置上？</p>
+    </div>
+  </div>
+
+  <!-- WIND -->
+  <div class="section" style="padding-top:0; border-bottom:none;">
+    <div class="energy-section">
+      <div class="energy-header wind">
+        <div class="energy-icon">💨</div>
+        <div class="energy-name">風能量</div>
+        <div class="energy-sub">開創 ／ 願景</div>
+      </div>
+      <div class="energy-body">
+        <div class="energy-intro">
+          風能量的人是組織裡的「知識先行者」。他們用邏輯與遠見定義方向，擅長品牌定位、知識變現與多元整合。他們不只是想得遠——他們能把想法轉化成別人看得見的藍圖。
+        </div>
+        <div class="numbers-grid">
+          <div class="num-card wind"><div class="num-badge wind">0 號</div><div class="num-func">定義新價值</div><div class="num-core">產品</div></div>
+          <div class="num-card wind"><div class="num-badge wind">6 號</div><div class="num-func">開拓新市場</div><div class="num-core">銷售</div></div>
+          <div class="num-card wind"><div class="num-badge wind">17 號</div><div class="num-func">建立願景</div><div class="num-core">人才</div></div>
+          <div class="num-card wind"><div class="num-badge wind">1、11 號</div><div class="num-func">技術突破</div><div class="num-core">研發</div></div>
+          <div class="num-card wind"><div class="num-badge wind">20 號</div><div class="num-func">尋找資金</div><div class="num-core">財務</div></div>
+        </div>
+        <div class="energy-script">
+          <strong>【逐字稿】</strong><br>
+          如果你的核心數字是風能量，你天生就是一個能「說清楚、想明白、走在前面」的人。<br>
+          • 0 號的你，能重新定義一個產品或市場的價值，別人沒想到的角度，你一眼就看見。<br>
+          • 6 號的你，開口就是信任感，你最適合去開闢全新的客戶市場。<br>
+          • 17 號的你，能感知團隊的理想方向，是凝聚人心的願景領袖。<br>
+          • 1 號、11 號的你，擅長整合知識與資源，是研發端的技術突破型人才。<br>
+          • 20 號的你，精於規劃與風險評估，是尋找資金與投資人最強的橋樑。
+        </div>
+      </div>
+    </div>
+
+    <!-- WATER -->
+    <div class="energy-section">
+      <div class="energy-header water">
+        <div class="energy-icon">💧</div>
+        <div class="energy-name">水能量</div>
+        <div class="energy-sub">關係 ／ 信任</div>
+      </div>
+      <div class="energy-body">
+        <div class="energy-intro">
+          水能量的人是組織裡的「情感黏合劑」。他們以人為本，善解人意，能深刻理解用戶與夥伴的需求，建立長期穩固的信任關係。他們讓人感覺被懂得，而不只是被服務。
+        </div>
+        <div class="numbers-grid">
+          <div class="num-card water"><div class="num-badge water">7、12 號</div><div class="num-func">用戶體驗</div><div class="num-core">產品</div></div>
+          <div class="num-card water"><div class="num-badge water">2 號</div><div class="num-func">建立信任</div><div class="num-core">銷售</div></div>
+          <div class="num-card water"><div class="num-badge water">18 號</div><div class="num-func">團隊凝聚</div><div class="num-core">人才</div></div>
+          <div class="num-card water"><div class="num-badge water">13 號</div><div class="num-func">跨界合作</div><div class="num-core">研發</div></div>
+          <div class="num-card water"><div class="num-badge water">3 號</div><div class="num-func">投資人關係</div><div class="num-core">財務</div></div>
+        </div>
+        <div class="energy-script">
+          <strong>【逐字稿】</strong><br>
+          如果你是水能量，你擁有讓人打開心防的天賦——不靠技巧，靠的是真誠。<br>
+          • 7 號、12 號的你，深刻感知用戶的痛點與情緒，最適合打造讓人上癮的用戶體驗。<br>
+          • 2 號的你，不是靠話術成交，而是靠信任讓客戶主動回頭。<br>
+          • 18 號的你，能感受到團隊裡每一個人的狀態，是組織凝聚力的核心。<br>
+          • 13 號的你，擅長跨領域連結，能在不同圈子之間架起合作的橋樑。<br>
+          • 3 號的你，懂得維繫長期關係，是最受投資人信任的財務代言人。
+        </div>
+      </div>
+    </div>
+
+    <!-- FIRE -->
+    <div class="energy-section">
+      <div class="energy-header fire">
+        <div class="energy-icon">🔥</div>
+        <div class="energy-name">火能量</div>
+        <div class="energy-sub">行動 ／ 推進</div>
+      </div>
+      <div class="energy-body">
+        <div class="energy-intro">
+          火能量的人是組織裡的「執行引擎」。他們充滿幹勁，目標導向，能在混亂中快速找到突破口，把想法變成結果。他們不等待機會——他們創造機會。
+        </div>
+        <div class="numbers-grid">
+          <div class="num-card fire"><div class="num-badge fire">4 號</div><div class="num-func">產品落地</div><div class="num-core">產品</div></div>
+          <div class="num-card fire"><div class="num-badge fire">16 號</div><div class="num-func">業績達成</div><div class="num-core">銷售</div></div>
+          <div class="num-card fire"><div class="num-badge fire">8 號</div><div class="num-func">流程效率</div><div class="num-core">人才</div></div>
+          <div class="num-card fire"><div class="num-badge fire">19 號</div><div class="num-func">功能實現</div><div class="num-core">研發</div></div>
+          <div class="num-card fire"><div class="num-badge fire">14 號</div><div class="num-func">成本控制</div><div class="num-core">財務</div></div>
+        </div>
+        <div class="energy-script">
+          <strong>【逐字稿】</strong><br>
+          如果你是火能量，你最大的天賦是「讓事情真的發生」。<br>
+          • 4 號的你，能把最抽象的產品概念落地執行，是創業第一線最需要的人。<br>
+          • 16 號的你，天生就是衝業績的料，你的存在讓業務團隊士氣沸騰。<br>
+          • 8 號的你，擅長優化流程、提升效率，是讓組織運作更快更好的幕後功臣。<br>
+          • 19 號的你，能把技術方向轉化為實際可用的功能，是研發落地的最後一哩路。<br>
+          • 14 號的你，對數字與成本高度敏感，能讓企業在擴張的同時守住底線。
+        </div>
+      </div>
+    </div>
+
+    <!-- EARTH -->
+    <div class="energy-section">
+      <div class="energy-header earth">
+        <div class="energy-icon">🌱</div>
+        <div class="energy-name">土能量</div>
+        <div class="energy-sub">優化 ／ 守成</div>
+      </div>
+      <div class="energy-body">
+        <div class="energy-intro">
+          土能量的人是組織裡的「結構守護者」。他們重視價值觀、系統架構與長期積累，善於深思熟慮後給出最穩固的解決方案。他們讓企業走得長、走得穩。
+        </div>
+        <div class="numbers-grid">
+          <div class="num-card earth"><div class="num-badge earth">5 號</div><div class="num-func">迭代升級</div><div class="num-core">產品</div></div>
+          <div class="num-card earth"><div class="num-badge earth">15 號</div><div class="num-func">轉化率提升</div><div class="num-core">銷售</div></div>
+          <div class="num-card earth"><div class="num-badge earth">21 號</div><div class="num-func">績效考核</div><div class="num-core">人才</div></div>
+          <div class="num-card earth"><div class="num-badge earth">10 號</div><div class="num-func">專利佈局</div><div class="num-core">研發</div></div>
+          <div class="num-card earth"><div class="num-badge earth">9 號</div><div class="num-func">利潤最大化</div><div class="num-core">財務</div></div>
+        </div>
+        <div class="energy-script">
+          <strong>【逐字稿】</strong><br>
+          如果你是土能量，你的天賦是「把好的事情做到極致，把對的東西守住」。<br>
+          • 5 號的你，對產品品質有高度堅持，持續迭代升級，讓產品越來越完美。<br>
+          • 15 號的你，懂得挖掘每一個細節來提升轉化率，讓銷售漏斗不再漏水。<br>
+          • 21 號的你，擅長建立績效制度與考核框架，讓組織運作有據可查、公平透明。<br>
+          • 10 號的你，具備長遠的知識產權意識，能為企業佈局專利、鞏固技術護城河。<br>
+          • 9 號的你，對財務結構有深度洞察，是讓企業從獲利走向利潤最大化的關鍵。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: CLOSING CALLOUT -->
+  <div class="section">
+    <div class="section-number">Section 03</div>
+    <div class="section-title">結語文案</div>
+    <div class="section-desc">適用場景：圖片結尾、導流至官網的文字</div>
+
+    <div class="script-block">
+      <p>你屬於哪種能量？你的號碼，又對應到企業裡哪個最關鍵的位置？</p>
+      <p>MMT 天賦系統幫助你看見自己的底層驅動力，也幫助企業主精準識別——誰是你需要的先鋒、誰是你需要的守衛、誰能讓你的團隊從一盤散沙變成一支精銳部隊。</p>
+      <p>識人，從了解自己開始。</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">▍ 立即查看你的天賦設計圖</div>
+      <p>輸入你的出生年月日，即可解鎖你專屬的天賦號碼，了解你在商業世界裡的精準定位。</p>
+      <p style="margin-top:10px; color: rgba(255,255,255,0.6); font-size:13px;">👉 免費測試 · 無需出生時間 · 即測即得</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-title">發現你的天賦設計圖</div>
+    <div class="cta-sub">Mercury Mental Thinking · 識人 × 用人 × 留人</div>
+    <a class="cta-url" href="https://one-mercury.com" target="_blank">one-mercury.com</a>
+  </div>
+
+</div>
+</body>
+</html>
